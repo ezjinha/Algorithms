@@ -7,10 +7,10 @@ const int LEFT = -1;
 const int DOWN = 0;
 const int RIGHT = 1;
 
-int ladder[100][100];	// array for ladder
+int ladder[100][100];		// array for ladder
 int dirDown;			// flag for check direction of move
 bool isFound;			// flag for checking if X is found
-int ans;				// answer
+int ans;			// answer
 
 bool rightMovable(int y, int x)
 {
@@ -60,8 +60,6 @@ void move(int y, int x, int dir)
 		else
 			move(y + 1, x, DOWN);
 	}
-
-
 }
 
 int main()
@@ -92,7 +90,6 @@ int main()
 				}
 			}
 		}
-
 		cout << '#' << test_case << ' ' << ans << endl;
 	}
 
