@@ -15,7 +15,6 @@ public:
 int W;			// width
 int H;			// height
 int N;			// count of intersection
-int max_cnt;	// max count of map
 Coord* cd;		// array of given coordination
 
 int moveCnt()
