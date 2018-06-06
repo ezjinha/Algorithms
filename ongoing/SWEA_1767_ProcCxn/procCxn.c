@@ -8,17 +8,18 @@ typedef struct
 {
 	int y;
 	int x;
-	bool isValid[4];
+	int len[4];				// valid length by direction (If not, value is -1)
+	int len_cnt;			// count of valid line
 } Coord;
 
-Coord core[12];		// array of core coordination
-int** cell;			// array of cell
-int N;				// size of cell	
-int K;				// size of core
-int core_cnt;		// count of core
-int len_sum;		// length sum
-int max_cnt;		// maximum count of core
-int min_len;		// minimum length of line
+Coord core[12];				// array of core coordination
+int** cell;					// array of cell
+int N;						// size of cell	
+int K;						// size of core
+int core_cnt;				// count of core
+int len_sum;				// length sum
+int max_cnt;				// maximum count of core
+int min_len;				// minimum length of line
 
 #define DOWN  0
 #define RIGHT 1
@@ -63,18 +64,31 @@ void removeLine()
 //		min_len = min_len > len_sum ? len_sum : min_len;
 //}
 
-//void connectLine(Coord cod)
-//{
-//	int y = cod.y;
-//	int x = cod.x;
-//	int dir = cod.dir;
-//	for (int i = 0; i < cod.len; i++)
-//	{
-//		y += dy[dir];
-//		x += dx[dir];
-//		cell[y][x] = 2;
-//	}
-//}
+void connectLine()
+{
+	for (int i = 0; i < K; i++)
+	{
+		int min_len = N;
+		int min_dir = 0;
+
+		for (int j = 0; j < 4; j++)
+			if (min_len > core[i].len[j])
+			{
+				min_len = core[i].len[j];
+				min_dir = j;
+			}
+
+		int y = core[i].y;
+		int x = core[i].x;
+
+		for (int j = 0; j < min_len; j++)
+		{
+			y += dy[min_dir];
+			x += dx[min_dir];
+			cell[y][x] = 2;
+		}
+	}
+}
 
 //void findShortestLine(Coord* cod)
 //{
@@ -190,30 +204,14 @@ void removeLine()
 //	makeVortexSequence(y, x, dir, lev, cnt);
 //}
 
-void connectLine()
+void changeOrderByLine()
 {
-	for (int i = 0; i < K; i++)
+	for (int i = 0; i < K - 1; i++)
 	{
-		int y = core[i].y;
-		int x = core[i].x;
-
-		for (int j = 0; j < 4; j++)
+		for (int j = i + 1; j < K; j++)
 		{
-			int ny = y + dy[j];
-			int nx = x + dx[j];
-
-			if (core[i].isValid[j])
-			{
-				while (nx != -1 && nx != N && ny != -1 && ny != N)
-				{
-					if (cell[ny][nx] == 2)
-						cell[ny][nx] = 3;
-					else
-						cell[ny][nx] = 2;
-					ny += dy[j];
-					nx += dx[j];
-				}
-			}
+			if (core[i].len_cnt > core[j].len_cnt)
+				swap(&core[i], &core[j]);
 		}
 	}
 }
@@ -226,6 +224,7 @@ void decideConnection()
 		int x = core[i].x;
 		for (int j = 0; j < 4; j++)
 		{
+			int l = 0;
 			int ny = y + dy[j];
 			int nx = x + dx[j];
 
@@ -233,13 +232,18 @@ void decideConnection()
 			{
 				if (ny == -1 || ny == N || nx == -1 || nx == N)
 				{
-					core[i].isValid[j] = true;
+					core[i].len[j] = l;
+					core[i].len_cnt += 1;
 					break;
 				}
 				else if (cell[ny][nx] == 1)
+				{
+					core[i].len[j] = -1;
 					break;
+				}
 				else
 				{
+					l += 1;
 					ny += dy[j];
 					nx += dx[j];
 				}
@@ -292,7 +296,13 @@ int main()
 		input();
 
 		decideConnection();
-		connectLine();
+		changeOrderByLine();
+
+
+
+
+		//for (int i = 0; i < K; i++)
+		//	printf("%d\n", core[i].len_cnt);
 
 		//print
 		//for (int i = 0; i < N; i++)
@@ -328,12 +338,12 @@ int main()
 		//for (int i = 0; i < K; i++)
 		//	printf("%d, %d\n", core[i].y, core[i].x);
 
-		for (int i = 0; i < N; i++)
-		{
-			for (int j = 0; j < N; j++)
-				printf("%d ", cell[i][j]);
-			printf("\n");
-		}
+		//for (int i = 0; i < N; i++)
+		//{
+		//	for (int j = 0; j < N; j++)
+		//		printf("%d ", cell[i][j]);
+		//	printf("\n");
+		//}
 
 		//printf("#%d %d\n", test_case, min_len);
 
