@@ -8,27 +8,30 @@ typedef struct
 {
 	int y;
 	int x;
-	int dir;
-	int len;
+	int dir;			// direction
+	int len;			// length
 } Coord;
 
-Coord core[12];		// array of core coordination
-bool visited[12];	// check if visited
-int** cell;			// array of cell
-int N;				// size of cell	
-int K;				// size of core
-int core_cnt;		// count of core
-int len_sum;		// length sum
-int max_cnt;		// maximum count of core
-int min_len;		// minimum length of line
+Coord core[12];				// array of core coordination
+bool visited[12];			// check if visited
+int** cell;				// array of cell
+int N;					// size of cell	
+int K;					// size of core
+int core_cnt;				// count of core
+int len_sum;				// length sum
+int max_cnt;				// maximum count of core
+int min_len;				// minimum length of line
 
-#define DOWN  0
-#define RIGHT 1
-#define UP    2
-#define LEFT  3
-
+// DOWN, RIGHT, UP, LEFT
 int dy[] = { 1, 0, -1, 0 };
 int dx[] = { 0, 1, 0, -1 };
+
+void swap(Coord* cod1, Coord* cod2)
+{
+	Coord temp = *cod1;
+	*cod1 = *cod2;
+	*cod2 = temp;
+}
 
 void removeLine()
 {
@@ -60,14 +63,18 @@ void calculateLength()
 
 void connectLine(Coord cod)
 {
-	int y = cod.y;
-	int x = cod.x;
-	int dir = cod.dir;
-	for (int i = 0; i < cod.len; i++)
+	if (cod.dir != -1)
 	{
-		y += dy[dir];
-		x += dx[dir];
-		cell[y][x] = 2;
+		int y = cod.y;
+		int x = cod.x;
+		int dir = cod.dir;
+		
+		for (int i = 0; i < cod.len; i++)
+		{
+			y += dy[dir];
+			x += dx[dir];
+			cell[y][x] = 2;
+		}
 	}
 }
 
@@ -116,6 +123,9 @@ void makeSequences(int start, int n)
 {
 	if (n == K)
 	{
+		for (int i = 0; i < K; i++)
+			findShortestLine(&core[i]);
+
 		calculateLength();
 
 		if (max_cnt < core_cnt)
@@ -130,97 +140,29 @@ void makeSequences(int start, int n)
 		core_cnt = 0;
 		len_sum = 0;
 
-		//for (int i = 0; i < K; i++)
-		//	printf("(%d, %d)  ", core[i].x, core[i].y);
-		//printf("\n");
-
 		return;
 	}
 
 	for (int i = start; i < K; i++)
 	{
-		if (!visited[i])
+		if (!visited[start])
 		{
-			visited[i] = true;
-			findShortestLine(&core[start]);
-			makeSequences(i + 1, n + 1);
+			visited[start] = true;
+			swap(&core[start], &core[i]);
+			makeSequences(start + 1, n + 1);
+			swap(&core[start], &core[i]);
+			visited[start] = false;
 		}
-		visited[i] = false;
-		//swap(&core[start], &core[i]);
-		//makeSequences(start + 1, n + 1);
-		//swap(&core[start], &core[i]);
 	}
 }
-
-//void makeVortexSequence(int y, int x, int dir, int lev, int cnt)
-//{
-//	if (y == 0 || y == N - 1 || x == 0 || x == N - 1)
-//		return;
-//
-//	for (int i = 0; i < lev; i++)
-//	{
-//		if (cell[y][x] == 1)
-//		{
-//			core[K].y = y;
-//			core[K].x = x;
-//			core[K].dir = -1;
-//			core[K].len = 0;
-//			K++;
-//		}
-//
-//		y += dy[dir];
-//		x += dx[dir];
-//	}
-//
-//	if (cnt == 1)
-//	{
-//		lev += 1;
-//		cnt = 0;
-//	}
-//	else
-//		cnt += 1;
-//
-//	if (dir == LEFT)
-//		dir = DOWN;
-//	else
-//		dir += 1;
-//
-//	makeVortexSequence(y, x, dir, lev, cnt);
-//}
-
-//void connectLine()
-//{
-//	for (int i = 0; i < K; i++)
-//	{
-//		int y = core[i].y;
-//		int x = core[i].x;
-//
-//		for (int j = 0; j < 4; j++)
-//		{
-//			int ny = y + dy[j];
-//			int nx = x + dx[j];
-//
-//			if (core[i].isValid[j])
-//			{
-//				while (nx != -1 && nx != N && ny != -1 && ny != N)
-//				{
-//					if (cell[ny][nx] == 2)
-//						cell[ny][nx] = 3;
-//					else
-//						cell[ny][nx] = 2;
-//					ny += dy[j];
-//					nx += dx[j];
-//				}
-//			}
-//		}
-//	}
-//}
 
 void input()
 {
 	memset(core, 0, 12);
 	K = 0;
 	for (int i = 0; i < N; i++)
+	{
+		memset(cell[i], 0, N);
 		for (int j = 0; j < N; j++)
 		{
 			scanf("%d", &cell[i][j]);
@@ -234,6 +176,7 @@ void input()
 				K++;
 			}
 		}
+	}
 }
 
 int main()
@@ -258,48 +201,7 @@ int main()
 			cell[i] = (int*)malloc(sizeof(int) * N);
 
 		input();
-
-		//print
-		//for (int i = 0; i < N; i++)
-		//{
-		//	for (int j = 0; j < N; j++)
-		//		printf("%d ", cell[i][j]);
-		//	printf("\n");
-		//}
-
 		makeSequences(0, 0);
-		//int start = (N - 1) / 2;
-		//makeVortexSequence(start, start, DOWN, 1, 0);
-
-		//for (int i = 0; i < K; i++)
-		//{
-		//	findShortestLine(&core[i]);
-		//	printf("(%d, %d)\n", core[i].dir, core[i].len);
-		//}
-
-		//removeLine();
-
-		//for (int i = 0; i < K; i++)
-		//{
-		//	findShortestLine(&core[i]);
-		//	printf("(%d, %d)\n", core[i].dir, core[i].len);
-		//}
-
-
-		//calculateLength();
-
-		// print
-		//printf("%d", K);
-		//for (int i = 0; i < K; i++)
-		//	printf("%d, %d\n", core[i].y, core[i].x);
-
-		//for (int i = 0; i < N; i++)
-		//{
-		//	for (int j = 0; j < N; j++)
-		//		printf("%d ", cell[i][j]);
-		//	printf("\n");
-		//}
-
 		printf("#%d %d\n", test_case, min_len);
 
 		// delete
