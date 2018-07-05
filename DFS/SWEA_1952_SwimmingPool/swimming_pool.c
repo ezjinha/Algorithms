@@ -1,9 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-int fee[4];			// 0: 1day, 1: 1month, 2: 3months, 3: 1year
-int day[12];		// swimming day of each month
-int min_fee;		// minimum fee
+int fee[4];				// 0: 1day, 1: 1month, 2: 3months, 3: 1year
+int day[12];			// swimming day of each month
+int min_fee;			// minimum fee
 
 void calculateFee(int month, int total)
 {
