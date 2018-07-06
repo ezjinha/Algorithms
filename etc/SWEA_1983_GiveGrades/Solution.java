@@ -3,10 +3,7 @@ import java.util.Scanner;
 
 public class Solution {
 	
-	public static final String grade[] = {"A+", "A0", "A-", 
-										  "B+", "B0", "B-",
-										  "C+", "C0", "C-",
-										  "D0"};
+	public static final String grade[] = {"A+", "A0", "A-", "B+", "B0", "B-", "C+", "C0", "C-", "D0"};
 	
 	Scanner sc = new Scanner(System.in);
 	int N;			// number of students
@@ -18,7 +15,6 @@ public class Solution {
 		int test_case = sc.nextInt();
 		
 		for (int i = 1; i <= test_case; i++) {
-//		for (int i = 1; i <= 1; i++) {
 			input();
 			giveGrade();
 			
