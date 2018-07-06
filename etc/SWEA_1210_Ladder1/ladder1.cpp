@@ -7,10 +7,10 @@ const int LEFT = -1;
 const int DOWN = 0;
 const int RIGHT = 1;
 
-int ladder[100][100];		// array for ladder
+int ladder[100][100];			// array for ladder
 int dirDown;				// flag for check direction of move
 bool isFound;				// flag for checking if X is found
-int ans;					// answer
+int ans;				// answer
 
 bool rightMovable(int y, int x)
 {
