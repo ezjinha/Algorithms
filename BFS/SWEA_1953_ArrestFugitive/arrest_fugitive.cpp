@@ -24,36 +24,51 @@ int R, C;					// location (y, x)
 int L;						// run time
 int ans;					// answer
 
-bool isMovable(int tunnel, int dir)
+bool isMovable(int tunnel, int n_tunnel, int dir)
 {
 	switch (tunnel)
 	{
-	case 0:
-		return false;
 	case 1:
+		if ((dir == 0 && (n_tunnel == 3 || n_tunnel == 4 || n_tunnel == 7)) ||
+			(dir == 1 && (n_tunnel == 3 || n_tunnel == 5 || n_tunnel == 6)) ||
+			(dir == 2 && (n_tunnel == 2 || n_tunnel == 6 || n_tunnel == 7)) ||
+			(dir == 3 && (n_tunnel == 2 || n_tunnel == 4 || n_tunnel == 5)))
+			return false;
 		break;
 	case 2:
-		if (dir == 2 || dir == 3)
+		if ((dir == 0 && (n_tunnel == 3 || n_tunnel == 4 || n_tunnel == 7)) ||
+			(dir == 1 && (n_tunnel == 3 || n_tunnel == 5 || n_tunnel == 6)) ||
+			dir == 2 || dir == 3)
 			return false;
 		break;
 	case 3:
-		if (dir == 0 || dir == 1)
+		if ((dir == 2 && (n_tunnel == 2 || n_tunnel == 6 || n_tunnel == 7)) ||
+			(dir == 3 && (n_tunnel == 2 || n_tunnel == 4 || n_tunnel == 5)) ||
+			dir == 0 || dir == 1)
 			return false;
 		break;
 	case 4:
-		if (dir == 1 || dir == 2)
+		if ((dir == 0 && (n_tunnel == 3 || n_tunnel == 4 || n_tunnel == 7)) ||
+			(dir == 3 && (n_tunnel == 2 || n_tunnel == 4 || n_tunnel == 5)) ||
+			dir == 1 || dir == 2)
 			return false;
 		break;
 	case 5:
-		if (dir == 0 || dir == 2)
+		if ((dir == 1 && (n_tunnel == 3 || n_tunnel == 5 || n_tunnel == 6)) ||
+			(dir == 3 && (n_tunnel == 2 || n_tunnel == 5 || n_tunnel == 4)) ||
+			dir == 0 || dir == 2)
 			return false;
 		break;
 	case 6:
-		if (dir == 0 || dir == 3)
+		if ((dir == 1 && (n_tunnel == 3 || n_tunnel == 5 || n_tunnel == 6)) ||
+			(dir == 2 && (n_tunnel == 2 || n_tunnel == 6 || n_tunnel == 7)) ||
+			dir == 0 || dir == 3)
 			return false;
 		break;
 	case 7:
-		if (dir == 1 || dir == 3)
+		if ((dir == 0 && (n_tunnel == 3 || n_tunnel == 4 || n_tunnel == 7)) ||
+			(dir == 2 && (n_tunnel == 2 || n_tunnel == 6 || n_tunnel == 7)) ||
+			dir == 1 || dir == 3)
 			return false;
 		break;
 	}
@@ -68,23 +83,27 @@ void findLocation()
 	q.push(Coord(R, C, 1));
 	visited[R][C] = true;
 
-	while (int l = q.front().l < L)
+	while (!q.empty())
 	{
 		int y = q.front().y;
 		int x = q.front().x;
+		int l = q.front().l;
 
 		for (int i = 0; i < 4; i++)
 		{
 			int ny = y + dy[i];
 			int nx = x + dx[i];
+			int nl = l + 1;
 
 			if ((ny >= 0 && ny < N) &&
 				(nx >= 0 && nx < M) &&
 				!visited[ny][nx] &&
-				isMovable(map[y][x], i))
+				map[ny][nx] != 0 &&
+				nl <= L &&
+				isMovable(map[y][x], map[ny][nx], i))
 			{
 				visited[ny][nx] = true;
-				q.push(Coord(ny, nx, ++l));
+				q.push(Coord(ny, nx, nl));
 				ans++;
 			}
 		}
@@ -98,8 +117,7 @@ int main()
 	int T;		// count of testcase
 	cin >> T;
 
-	//for (int test_case = 1; test_case <= T; test_case++)
-	for (int test_case = 1; test_case <= 1; test_case++)
+	for (int test_case = 1; test_case <= T; test_case++)
 	{
 		// input
 		cin >> N >> M >> R >> C >> L;
