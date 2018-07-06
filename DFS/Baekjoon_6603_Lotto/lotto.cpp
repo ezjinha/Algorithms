@@ -5,7 +5,7 @@ using namespace std;
 
 int K;					// count of number
 int* num;				// array of lotto number
-bool* visited_num;		// array of visited check for backtracking
+bool* visited_num;			// array of visited check for backtracking
 
 void backtracking(int start, int n)
 {
