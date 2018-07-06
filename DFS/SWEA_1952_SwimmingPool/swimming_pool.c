@@ -37,7 +37,6 @@ int main()
 	scanf("%d", &T);
 
 	for (int test_case = 1; test_case <= T; test_case++)
-	//for (int test_case = 1; test_case <= 1; test_case++)
 	{
 		input();
 		min_fee = fee[3];		// assum that 1 year fee is minimum
