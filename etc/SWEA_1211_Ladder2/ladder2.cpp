@@ -7,10 +7,10 @@ const int LEFT = -1;
 const int DOWN = 0;
 const int RIGHT = 1;
 
-int ladder[100][100];		// array for ladder
-bool isMin;					// check if minimum value
-int minV;					// minimum value
-int ans;					// answer
+int ladder[100][100];			// array for ladder
+bool isMin;				// check if minimum value
+int minV;				// minimum value
+int ans;				// answer
 
 bool rightMovable(int y, int x)
 {
