@@ -26,7 +26,7 @@ int moveCnt()
 		Coord start = cd[i];
 		Coord finish = cd[i + 1];
 
-		if ((start.y > finish.y) && (start.x < finish.x))			// Quadrant 1
+		if ((start.y > finish.y) && (start.x < finish.x))		// Quadrant 1
 			cnt += (start.y - finish.y) + (finish.x - start.x);
 		else if ((start.y > finish.y) && (start.x > finish.x))		// Quadrant 2
 			cnt += max((start.y - finish.y), (start.x - finish.x));
@@ -34,9 +34,9 @@ int moveCnt()
 			cnt += (finish.y - start.y) + (start.x - finish.x);
 		else if ((start.y < finish.y) && (start.x < finish.x))		// Quadrant 4
 			cnt += max((finish.y - start.y), (finish.x - start.x));
-		else if (start.y == finish.y)								// X-axis
+		else if (start.y == finish.y)					// X-axis
 			cnt += abs(start.x - finish.x);
-		else if (start.x == finish.x)								// Y-axis
+		else if (start.x == finish.x)					// Y-axis
 			cnt += abs(start.y - finish.y);
 	}
 
