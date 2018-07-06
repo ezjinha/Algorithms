@@ -4,11 +4,11 @@ import java.util.Scanner;
 public class Solution {
 
 	Scanner sc = new Scanner(System.in);
-	int W;									// width
-	int H;									// height
-	int N;									// count of intersection
-	int x1, y1, x2, y2;						// coordination value
-	int ans;								// answer
+	int W;							// width
+	int H;							// height
+	int N;							// count of intersection
+	int x1, y1, x2, y2;					// coordination value
+	int ans;						// answer
 	
 	public Solution() {
 		int T = sc.nextInt();				// count of testcase
@@ -41,7 +41,7 @@ public class Solution {
 	
 	void moveByMin()
 	{
-	    if ((y1 > y2) && (x1 < x2))				// Quadrant 1
+	    if ((y1 > y2) && (x1 < x2))			// Quadrant 1
 	        ans += (y1 - y2) + (x2 - x1);
 	    else if ((y1 > y2) && (x1 > x2))		// Quadrant 2
 	        ans += ((y1 - y2) > (x1 - x2) ? y1 - y2 : x1 - x2);
@@ -49,9 +49,9 @@ public class Solution {
 	        ans += (y2 - y1) + (x1 - x2);
 	    else if ((y1 < y2) && (x1 < x2))		// Quadrant 4
 	        ans += ((y2 - y1) > (x2 - x1) ? y2 - y1 : x2 - x1);
-	    else if (y1 == y2)                      // X-axis
+	    else if (y1 == y2)                    	// X-axis
 	        ans += (x1 > x2 ? x1 - x2 : x2 - x1);
-	    else if (x1 == x2)                      // Y-axis
+	    else if (x1 == x2)                   	// Y-axis
 	        ans += (y1 > y2 ? y1 - y2 : y2 - y1);
 	}
 	
