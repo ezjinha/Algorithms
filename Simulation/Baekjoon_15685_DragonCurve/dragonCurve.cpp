@@ -4,11 +4,11 @@
 
 using namespace std;
 
-int map[101][101];						// map
-int N;									// number of dragon curve
-int X, Y;								// coordinate
-int D;									// start direction
-int G;									// generation
+int map[101][101];			// map
+int N;					// number of dragon curve
+int X, Y;				// coordinate
+int D;					// start direction
+int G;					// generation
 
 // right, up, left, down (0, 1, 2, 3)
 
@@ -99,7 +99,7 @@ void initialize()
 
 int main()
 {
-	fstream cin("input.txt");
+	ifstream cin("input.txt");
 
 	//for (int test_case = 1; test_case <= 1; test_case++)
 	for (int test_case = 1; test_case <= 4; test_case++)
