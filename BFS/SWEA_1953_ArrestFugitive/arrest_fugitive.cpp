@@ -17,12 +17,12 @@ int dy[] = { -1, 1, 0, 0 };
 int dx[] = { 0, 0, -1, 1 };
 
 int map[50][50];			// underground tunnel map
-bool visited[50][50];		// check if visited
-int N;						// vertical line
-int M;						// horizontal line
-int R, C;					// location (y, x)
-int L;						// run time
-int ans;					// answer
+bool visited[50][50];			// check if visited
+int N;					// vertical line
+int M;					// horizontal line
+int R, C;				// location (y, x)
+int L;					// run time
+int ans;				// answer
 
 bool isMovable(int tunnel, int n_tunnel, int dir)
 {
