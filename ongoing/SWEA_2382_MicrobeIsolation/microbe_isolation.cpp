@@ -21,7 +21,7 @@ public:
 };
 
 vector<Microbe> gp;			// vector of microbe
-vector<bool> coincided;			// vector of merged
+vector<bool> coincided;		// vector of merged
 int N;					// number of cell
 int M;					// isolation time
 int K;					// number of group
