@@ -3,9 +3,9 @@
 #include <vector>
 using namespace std;
 
-const int UP    = 1;
-const int DOWN  = 2;
-const int LEFT  = 3;
+const int UP = 1;
+const int DOWN = 2;
+const int LEFT = 3;
 const int RIGHT = 4;
 
 class Microbe
@@ -20,60 +20,96 @@ public:
 	Microbe(int _y, int _x, int _num, int _dir) : y(_y), x(_x), num(_num), dir(_dir) {}
 };
 
-vector<Microbe> gp;		// array of microbe
+vector<Microbe> gp;			// vector of microbe
+vector<bool> coincided;			// vector of merged
 int N;					// number of cell
 int M;					// isolation time
 int K;					// number of group
+int ans;				// answer
 
-bool isOnEdge(Microbe& m)
+void calculate()
 {
-	if (m.y == 0 || m.y == N - 1 || m.x == 0 || m.x == N - 1)
+	for (size_t i = 0; i < gp.size(); i++)
 	{
-		m.num /= 2;
-		return true;
+		ans += gp[i].num;
 	}
-	return false;
 }
 
-void move(Microbe& m)
+void merge()
 {
-	if (isOnEdge(m))
+	for (size_t i = 0; i < gp.size() - 1; i++)
 	{
-		switch (m.dir)
+		int max_num = gp[i].num;
+		int num = gp[i].num;
+		int dir = gp[i].dir;
+		for (size_t j = i + 1; j < gp.size(); j++)
 		{
-		case UP:
-			m.dir = DOWN;
-			break;
-		case DOWN:
-			m.dir = UP;
-			break;
-		case LEFT:
-			m.dir = RIGHT;
-			break;
-		case RIGHT:
-			m.dir = LEFT;
-			break;
+			if (!coincided[j] && gp[i].y == gp[j].y && gp[i].x == gp[j].x)
+			{
+				coincided[j] = true;
+				if (max_num < gp[j].num)
+				{
+					max_num = gp[j].num;
+					dir = gp[j].dir;
+				}
+				num += gp[j].num;
+			}
 		}
-	}
-	else
-	{
-		switch (m.dir)
-		{
-		case UP:
-			m.y -= 1;
-			break;
-		case DOWN:
-			m.y += 1;
-			break;
-		case LEFT:
-			m.x -= 1;
-			break;
-		case RIGHT:
-			m.x += 1;
-			break;
-		}
+		gp[i].num = num;
+		gp[i].dir = dir;
 	}
 
+	for (size_t i = 0; i < gp.size(); i++)
+	{
+		if (coincided[i])
+		{
+			gp.erase(gp.begin() + i);
+			coincided.erase(coincided.begin() + i);
+		}
+	}
+}
+
+void move()
+{
+	for (size_t i = 0; i < gp.size(); i++)
+	{
+		switch (gp[i].dir)
+		{
+		case UP:
+			gp[i].y -= 1;
+			break;
+		case DOWN:
+			gp[i].y += 1;
+			break;
+		case LEFT:
+			gp[i].x -= 1;
+			break;
+		case RIGHT:
+			gp[i].x += 1;
+			break;
+		}
+
+		if (gp[i].y == 0 || gp[i].y == N - 1 || gp[i].x == 0 || gp[i].x == N - 1)
+		{
+			gp[i].num /= 2;
+
+			switch (gp[i].dir)
+			{
+			case UP:
+				gp[i].dir = DOWN;
+				break;
+			case DOWN:
+				gp[i].dir = UP;
+				break;
+			case LEFT:
+				gp[i].dir = RIGHT;
+				break;
+			case RIGHT:
+				gp[i].dir = LEFT;
+				break;
+			}
+		}
+	}
 }
 
 int main()
@@ -83,8 +119,9 @@ int main()
 	cin >> T;
 
 	//for (int test_case = 1; test_case <= T; test_case++)
-	for (int test_case = 1; test_case <= 1; test_case++)
+	for (int test_case = 1; test_case <= 2; test_case++)
 	{
+		ans = 0;
 		int y, x, num, dir;
 		cin >> N >> M >> K;
 
@@ -92,8 +129,18 @@ int main()
 		for (int i = 0; i < K; i++)
 		{
 			cin >> y >> x >> num >> dir;
-			gp[i] = Microbe(y, x, num, dir);
+			gp.push_back(Microbe(y, x, num, dir));
+			coincided.push_back(false);
 		}
+
+		for (int i = 0; i < M; i++)
+		{
+			move();
+			merge();
+		}
+
+		calculate();
+		cout << '#' << test_case << ' ' << ans << endl;
 	}
 
 	return 0;
