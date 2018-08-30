@@ -58,15 +58,16 @@ void merge()
         gp[i].dir = dir;
     }
  
-    for (size_t i = 0; i < gp.size(); i++)
+    int i = 0;
+    while (i != gp.size())
     {
         if (coincided[i])
-        {
-            gp.erase(gp.begin() + i);
-            coincided.erase(coincided.begin() + i);
-            i--;
-        }
-    }
+		      {
+			          gp.erase(gp.begin() + i);
+			          coincided.erase(coincided.begin() + i);
+		      }
+        else
+            i++;
 }
  
 void move()
