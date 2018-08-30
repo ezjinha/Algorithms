@@ -64,6 +64,7 @@ void merge()
         {
             gp.erase(gp.begin() + i);
             coincided.erase(coincided.begin() + i);
+            i--;
         }
     }
 }
