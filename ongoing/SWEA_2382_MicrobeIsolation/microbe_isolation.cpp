@@ -19,11 +19,11 @@ public:
     Microbe(int _y, int _x, int _num, int _dir) : y(_y), x(_x), num(_num), dir(_dir) {}
 };
  
-vector<Microbe> gp;       // vector of microbe
-vector<bool> coincided;   // vector of merged
+vector<Microbe> gp;            // vector of microbe
+vector<bool> coincided;        // vector of merged
 int N;                         // number of cell
 int M;                         // isolation time
-int K;                          // number of group
+int K;                         // number of group
 int ans;                       // answer
  
 void calculate()
