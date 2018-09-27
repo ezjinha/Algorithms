@@ -32,7 +32,7 @@ int A;						// number of Battery Charger
 int move_info_A[100];				// move info of A
 int move_info_B[100];				// move info of B
 BC bc[8];					// array of BC
-int max_charge;					// max value of charge
+int max_charge;				// max value of charge
 
 void sumCharge(User a, User b, int t, int charge_sum)
 {
