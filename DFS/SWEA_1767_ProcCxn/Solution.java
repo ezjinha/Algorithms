@@ -23,13 +23,13 @@ public class Solution {
 	}
 	
 	Scanner sc = new Scanner(System.in);
-	Coord[] core = new Coord[12];				// array of core coordination
-	boolean[] visited = new boolean[12];		// check if visited
-	int[][] cell;								// array of cell
-	int N;										// size of cell	
-	int core_cnt;								// count of core
-	int max_cnt;								// maximum count of core
-	int min_len;								// minimum length of line
+	Coord[] core = new Coord[12];					// array of core coordination
+	boolean[] visited = new boolean[12];				// check if visited
+	int[][] cell;							// array of cell
+	int N;								// size of cell	
+	int core_cnt;							// count of core
+	int max_cnt;							// maximum count of core
+	int min_len;							// minimum length of line
 	
 	
 	boolean isConflicted(int y, int x, int dir) {
