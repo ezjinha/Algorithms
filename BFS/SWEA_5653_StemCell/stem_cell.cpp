@@ -19,8 +19,8 @@ struct Cell
 {
 	int y;
 	int x;
-	int t;			// elapsed time
-	int st;			// state time
+	int t;					// elapsed time
+	int st;					// state time
 
 	bool operator<(const Cell& cell) const
 	{
@@ -30,11 +30,11 @@ struct Cell
 	}
 };
 
-int N;								// vertical size
-int M;								// horizontal size
-int K;								// iucubation time
-priority_queue<Cell> q;						// queue for cell
-int cell_num;							// number of cell
+int N;						// vertical size
+int M;						// horizontal size
+int K;						// iucubation time
+priority_queue<Cell> q;				// queue for cell
+int cell_num;					// number of cell
 
 void incubate()
 {
