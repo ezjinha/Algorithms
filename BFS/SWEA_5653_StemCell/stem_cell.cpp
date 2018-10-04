@@ -30,10 +30,10 @@ struct Cell
 	}
 };
 
-int N;									// vertical size
-int M;									// horizontal size
-int K;									// iucubation time
-priority_queue<Cell> q;					// queue for cell
+int N;								// vertical size
+int M;								// horizontal size
+int K;								// iucubation time
+priority_queue<Cell> q;						// queue for cell
 int cell_num;							// number of cell
 
 void incubate()
