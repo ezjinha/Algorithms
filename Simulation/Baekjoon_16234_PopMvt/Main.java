@@ -20,15 +20,15 @@ public class Main {
 	final int dy[] = {-1, 0, 1, 0};
 	final int dx[] = {0, 1, 0, -1};
 	
-	int A[][];						// array for area
-	ArrayList<Coord> openedA;		// arrayList for opened area
-	boolean isChecked[][];			// array to check if population is checked
+	int A[][];					// array for area
+	ArrayList<Coord> openedA;			// arrayList for opened area
+	boolean isChecked[][];				// array to check if population is checked
 	boolean isFinished;				// flag to check if movement is finished
-	int N;							// length of area
-	int L;							// minimum population
-	int R;							// maximum population
+	int N;						// length of area
+	int L;						// minimum population
+	int R;						// maximum population
 	int pop_sum;					// population sum
-	int ans;						// number of movement
+	int ans;					// number of movement
 	
 	Scanner sc = new Scanner(System.in);
 	
