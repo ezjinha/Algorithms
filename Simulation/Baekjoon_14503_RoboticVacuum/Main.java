@@ -10,7 +10,7 @@ public class Main {
 	final int dy[] = {-1, 0, 1, 0};
 	final int dx[] = {0, 1, 0, -1};
 	
-	int area[][];	// array for area | cleaned: 2, wall: 1, uncleaned: 0
+	int area[][];		// array for area | cleaned: 2, wall: 1, uncleaned: 0
 	int N;			// vertical line
 	int M;			// horizontal line
 	int r, c;		// start coordination
@@ -76,7 +76,6 @@ public class Main {
 		int T = sc.nextInt();		// number of testcase
 		
 		for (int test_case = 1; test_case <= T; test_case++) {
-//		for (int test_case = 1; test_case <= 1; test_case++) {
 			input();
 			clean(r, c, d);
 			System.out.println(ans);
