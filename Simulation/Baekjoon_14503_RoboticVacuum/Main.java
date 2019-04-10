@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class Main {
 
-	final int NORTH = 0;
-	final int EAST  = 1;
-	final int SOUTH = 2;
-	final int WEST  = 3;
+//	final int NORTH = 0;
+//	final int EAST  = 1;
+//	final int SOUTH = 2;
+//	final int WEST  = 3;
 	final int dy[] = {-1, 0, 1, 0};
 	final int dx[] = {0, 1, 0, -1};
 	
