@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 class Person
@@ -8,7 +9,7 @@ class Person
 public:
 	int y;
 	int x;
-	int selected_stairs;			// selected stairs
+	int selected_stairs;		// selected stairs
 	int distance;				// distance from selected stairs or arrival
 	bool isOnStairs;			// flag to check if the person is on stairs
 	bool arrived;				// flag to check if the person arrived
@@ -21,8 +22,8 @@ class Stairs
 public:
 	int y;
 	int x;
-	int l;					// stair length
-	int n;					// number of people
+	int l;						// stair length
+	int n;						// number of people
 	Stairs() {}
 	Stairs(int _y, int _x, int _l) : y(_y), x(_x), l(_l), n(0) {}
 };
@@ -31,14 +32,27 @@ public:
 vector<Person> pv;				// person vector
 vector<Stairs> sv;				// stairs vector
 int room[10][10];				// array of room
-int N;						// room length
+int N;							// room length
 int min_time;					// minimum taken time
 
-/********************************************/
-// 예외케이스
-// 계단 앞에서 기다리고 있는 경우: distance == 0 && isOnStairs == false
-// 계단을 다 내려온 경우        : distance == 0 && isOnStairs == true
-/********************************************/
+void getPersonToFront()
+{
+	int idx = 0;
+	for (size_t i = 0; i < pv.size(); i++)
+	{
+		if (pv[i].isOnStairs)
+		{
+			swap(pv[idx], pv[i]);
+			idx++;
+		}
+	}
+}
+
+/***************************************************************************/
+// case to be considered
+// When waiting in front of the stairs: distance == 0 && isOnStairs == false
+// When arriving at first floor       : distance == 0 && isOnStairs == true
+/***************************************************************************/
 void move()
 {
 	int t = 0;
@@ -46,7 +60,7 @@ void move()
 	while (!areAllFinished)
 	{
 		areAllFinished = true;
-		vector<int> onStairs_list;
+		getPersonToFront();
 
 		for (size_t i = 0; i < pv.size(); i++)
 		{
@@ -66,10 +80,9 @@ void move()
 					// the stairs is not full
 					if (sv[selected_stairs].n < 3)
 					{
-						sv[selected_stairs].n += 1;															// 계단에 오르는 인원 증가
-						distance =  distance < 0 ? sv[selected_stairs].l : sv[selected_stairs].l + 1;		// 기다리는 시간 1분 추가
+						sv[selected_stairs].n += 1;															// increase number of person on stairs
+						distance =  distance < 0 ? sv[selected_stairs].l : sv[selected_stairs].l + 1;		// add 1 minute when arriving at the stairs
 						isOnStairs = true;
-						onStairs_list.push_back(i);
 					}
 				}
 
@@ -82,14 +95,6 @@ void move()
 
 			// check if all people have arrived
 			areAllFinished &= arrived;
-		}
-
-		// get the person to the front
-		for (int& i : onStairs_list)
-		{
-			Person p = pv[i];
-			pv.insert(pv.begin(), p);
-			pv.erase(pv.begin() + i + 1);
 		}
 		
 		t++;
@@ -133,8 +138,8 @@ int main()
 	int T;
 	cin >> T;
 
-	// for (int test_case = 1; test_case <= T; test_case++)
-	for (int test_case = 1; test_case <= 1; test_case++)
+	for (int test_case = 1; test_case <= T; test_case++)
+	// for (int test_case = 1; test_case <= 1; test_case++)
 	{
 		pv.clear();
 		sv.clear();
