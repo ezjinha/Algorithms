@@ -8,18 +8,18 @@ dx = [0, -1, 0, 1]
 
 # class
 class Coord:
-    def __init__(self, y, x):	# define constructor
+    def __init__(self, y, x):					# define constructor
         self.y = y
 	self.x = x
     pass
 
 def init():
-    global A			# To use global variable
-    global N			# size of list
-    global ONE_ARRAY		# one dimension array
-    global TWO_ARRAY		# two dimension array
+    global A							# To use global variable
+    global N							# size of list
+    global ONE_ARRAY						# one dimension array
+    global TWO_ARRAY						# two dimension array
 
-    A = int(input())		# To input value
+    A = int(input())						# To input value
     N = int(input())
     ONE_ARRAY = [0 for i in range(N)]
     TWO_ARRAY = [[0 for col in range(N)] for row in range(N)]	# initialization
@@ -30,8 +30,8 @@ def init():
         y, x = map(int, input().split())
 
 def func():
-    global A, N			# To use global variables defined in 'init'
-    global DIR, dy, dx		# To use global variables globally
+    global A, N							# To use global variables defined in 'init'
+    global DIR, dy, dx						# To use global variables globally
 
     if (A is 0):
     	print("A is 0")
