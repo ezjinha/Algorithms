@@ -10,10 +10,11 @@ dx = [0, -1, 0, 1]
 class Coord:
     def __init__(self, y, x):					# define constructor
         self.y = y
-	self.x = x
+        self.x = x
     pass
 
 def init():
+    global N			    				# size of list
     global A							# To use global variable
     global N							# size of list
     global ONE_ARRAY						# one dimension array
@@ -21,13 +22,30 @@ def init():
 
     A = int(input())						# To input value
     N = int(input())
-    ONE_ARRAY = [0 for i in range(N)]
-    TWO_ARRAY = [[0 for col in range(N)] for row in range(N)]	# initialization
+    ONE_ARRAY = [0 for i in range(N)]                           # ONE_ARRAY initialization
+    TWO_ARRAY = [[0 for col in range(N)] for row in range(N)]	# TWO_ARRAY initialization
 
+    ''' Input '''
+    # If the numbers are provided in same line,
+    # First
     for i in range(N):
-        # number of variable in one row in 'input.txt'
-	# map(<type>, input().split())
+	    # map(<type>, input().split())
         y, x = map(int, input().split())
+
+    # Second
+    ONE_ARRAY = list(map(int, input().split()))
+    
+    # If the numbers are provided in different lines,
+    # ONE_ARRAY = [ int(input()) for i in range(n)]
+
+    ''' Output '''
+    # print TWO_ARRAY
+    # print has newline, thus newline is removed by print(<value>, end=' ')
+    for i in range(N):
+        for j in range(N):
+            print(TWO_ARRAY[i][j], end=' ')
+        print('')
+    pass
 
 def func():
     global A, N							# To use global variables defined in 'init'
