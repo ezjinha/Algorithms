@@ -48,15 +48,24 @@ def init():
     pass
 
 def func():
-    global A, N							# To use global variables defined in 'init'
-    global DIR, dy, dx						# To use global variables globally
-
-    if (A is 0):
-    	print("A is 0")
+    global A, N							# To edit global variables defined in 'init'
+    global DIR, dy, dx						# To edit global variables globally
+								# To use only, the definition is not needed
+    if (A == 0):
+    	print("A is equal to 0")
+    elif (A != 0):
+        print("A is not equal to 0")
+    elif (A is 0):
+        print("'is' is object comaprsion operator")
     elif (A is not 0):
-        print("A is not 0")
+        print("'is not' is object is not same")
     else:
         print("A is nothing")
+
+    ''' division operator '''
+    print(-1 / 2)						# reuslt: -0.5
+    print(-1 // 2)						# result: -1
+    print(int(-1 / 2))						# result: 0
 
 if __name__ == "__main__":
     init()
