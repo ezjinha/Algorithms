@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <memory.h>
-#include <time.h>
 
 int N;
 int weight[10];
@@ -79,12 +78,10 @@ int main()
 	scanf("%d", &T);
 
 	for (int test_case = 1; test_case <= T; test_case++)
-	//for (int test_case = 1; test_case <= 1; test_case++)
 	{
-		time_t start = clock();
 		input();
 		init();
 		
-		printf("#%d %d %d ms\n", test_case, getCount(0, 0, 0, 0, 0), clock() - start);
+		printf("#%d %d\n", test_case, getCount(0, 0, 0, 0, 0));
 	}
 }
